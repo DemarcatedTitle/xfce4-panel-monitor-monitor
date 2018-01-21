@@ -12,8 +12,14 @@ http://colinrrobinson.com/technology/linux/xfce/automatically-switch-xfce-panel-
 Make sure Node.js is installed
 Copy hotplug_monitor.sh to /usr/local/bin/
 Add the following line to your bashrc/zshrc:
-node /home/${yourusername}/${path to the git repo}/xfce-panel-monitor-watcher/server.js > /dev/null &
-If you don't use bash or zsh you can probably figure out how to add the equivalent line. 
+if ! pgrep -x "node" > /dev/null 
+then
+        node /${path_to_repo}/xfce4-panel-monitor-monitor/server.js &> /dev/null &
+fi
+
+The conditional is so you don't have new processes each time you start up bash/zsh.
+
+If you don't use bash or zsh you can probably figure out how to add the equivalent lines. 
 
 # Background
 I have a particular panel setup, and while XFCE4 is good for dealing with multiple monitors, the panel part of it isn't. I looked up how to do it and found the following guide: http://colinrrobinson.com/technology/linux/xfce/automatically-switch-xfce-panel-layout-plugging-monitor/ and it got me most of the way, but I ran into the issue of the python file not working because of some dbus stuff. I don't know too much about that, but on the systemd irc it was said that udev was not the ideal way to go about it.
